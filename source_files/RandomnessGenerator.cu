@@ -10,7 +10,7 @@ __global__ void getRandomParameters( unsigned int seed, float* gpu_random_parame
   }
   
   // Simple random number generator function, generates a float between 0.0 and 1.0
-  float RandomnessGenerator::getRandomStep() const { 
+__device__  float RandomnessGenerator::getRandomStep() const { 
 //Define number of parameters to be randomly generated
     const int NUMBER_OF_THREADS = 1;
 
@@ -35,7 +35,7 @@ __global__ void getRandomParameters( unsigned int seed, float* gpu_random_parame
  } 
 
 // Returns a Point object that has randomized x,y and z coordinates after converting from randomized spherical coordinates
- Point RandomnessGenerator::getRandomPoint()
+__device__ Point RandomnessGenerator::getRandomPoint()
 {
     Point point; // Instance of the Point struct to return with the random coordinates
 // Define number of parameters to be randomly generated
@@ -80,7 +80,7 @@ __global__ void getRandomParameters( unsigned int seed, float* gpu_random_parame
 }
 
 // A helper function to generate a csv file to use in plotting
-void RandomnessGenerator::exportSamplingPlot(Point point)
+__device__ void RandomnessGenerator::exportSamplingPlot(Point point)
 {
     // For streaming out my output in a log file
     FILE *sampling;
