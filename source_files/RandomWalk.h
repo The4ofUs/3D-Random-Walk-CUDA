@@ -22,7 +22,7 @@ __device__ Point randomWalk(curandState_t *states)
     currentPoint.setCoordinates(.0f,0.f,0.f);
     checkPoint.setCoordinates(Radius, Radius, Radius);
     ray.startFrom(origin);
-     while (currentPoint.getX()<Radius&& currentPoint.getY()<Radius &&currentPoint.getZ()<Radius&&currentPoint.getX()>-Radius&& currentPoint.getY()>-Radius &&currentPoint.getZ()>-Radius){
+    while (currentPoint.getX()<Radius&& currentPoint.getY()<Radius &&currentPoint.getZ()<Radius&&currentPoint.getX()>(-Radius)&& currentPoint.getY()>(-Radius) &&currentPoint.getZ()>(-Radius)){
         
     // This for loop simulates each step the photon takes
         // Setting ray direction
@@ -40,7 +40,7 @@ __device__ Point randomWalk(curandState_t *states)
         currentPoint=ray.getCurrentPos();
         i++;
     }
-    Point proj =  sphere.getProjection(ray.getCurrentPos(),Radius);
+    Point proj =  sphere.getProjection(currentPoint,Radius);
     return proj;
 }
 
