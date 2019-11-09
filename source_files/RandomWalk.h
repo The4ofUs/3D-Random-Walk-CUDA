@@ -11,12 +11,14 @@ __device__ Point randomWalk(curandState_t *states)
     RandomnessGenerator randomnessGenerator;
     Ray ray;
     Point origin;
+    Point currentPoint;
+    int i=0;
     origin.setCoordinates(0.f, 0.f, 0.f);
+    currentPoint.setCoordinates(.0f,0.f,0.f);
     ray.startFrom(origin);
-
+     while (currentPoint.getX()<10 && currentPoint.getY()<10 &&currentPoint.getZ()<10){
+        
     // This for loop simulates each step the photon takes
-    for (int i = 0; i < NUMBER_OF_ITERATIONS; i++)
-    {
         // Setting ray direction
         // Passing "states" and "i" as arguments for the sake of changing the seed and the state of the generator
         // for each iteration
@@ -29,6 +31,8 @@ __device__ Point randomWalk(curandState_t *states)
 
         // Move!
         ray.move();
+        currentPoint=ray.getCurrentPos();
+        i++;
     }
 
     return ray.getCurrentPos();
