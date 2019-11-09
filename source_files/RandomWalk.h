@@ -2,6 +2,7 @@
 #define RANDOMWALK_H
 
 #include "header.h"
+#include "barrierConstructor.h"
 #define NUMBER_OF_ITERATIONS 500 // Number of steps, just for the demo, this number should be decided or taken later on by the user
 
 // Returns the final position after a series of random wandering around in the 3D-space
@@ -12,11 +13,16 @@ __device__ Point randomWalk(curandState_t *states)
     Ray ray;
     Point origin;
     Point currentPoint;
+    Point checkPoint;
+    Barrier sphere;
     int i=0;
+    sphere.setRadius(10); //sphere Radius
+    int Radius= sphere.getRadius();
     origin.setCoordinates(0.f, 0.f, 0.f);
     currentPoint.setCoordinates(.0f,0.f,0.f);
+    checkPoint.setCoordinates(Radius, Radius, Radius);
     ray.startFrom(origin);
-     while (currentPoint.getX()<10 && currentPoint.getY()<10 &&currentPoint.getZ()<10){
+     while (currentPoint.getX()<Radius&& currentPoint.getY()<Radius &&currentPoint.getZ()<Radius&&currentPoint.getX()>-Radius&& currentPoint.getY()>-Radius &&currentPoint.getZ()>-Radius){
         
     // This for loop simulates each step the photon takes
         // Setting ray direction
@@ -34,8 +40,8 @@ __device__ Point randomWalk(curandState_t *states)
         currentPoint=ray.getCurrentPos();
         i++;
     }
-
-    return ray.getCurrentPos();
+    Point proj =  sphere.getProjection(ray.getCurrentPos(),Radius);
+    return proj;
 }
 
 #endif
