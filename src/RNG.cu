@@ -1,6 +1,6 @@
 #include "RNG.h"
 
-__device__ float RNG::generate( curandState* globalState, int i) 
+__device__  float RNG::generate( curandState* globalState, int i) 
 {
     curandState localState = globalState[i];
     float random = curand_uniform( &localState );
@@ -8,14 +8,15 @@ __device__ float RNG::generate( curandState* globalState, int i)
     return random;
 }
 
-__device__  float RNG::getRandomStep( curandState* globalState , int i) { 
+__device__   float RNG::getRandomStep( curandState* globalState , int i) { 
     float step = 0.f;       // Intialize for step value
     step = generate (globalState, i);
     return step;
  } 
 
-__device__ Point RNG::getRandomPoint( curandState* globalState , int i)
+__device__  Point RNG::getRandomPoint( curandState* globalState , int i)
 {
+
     float u = generate (globalState , i);
     float v = generate (globalState, i);
     

@@ -18,11 +18,13 @@ __device__ Point Ray::getPrevPos() const { return this->_prevPos; }
 
 __device__ float Ray::getStep() const { return this->_step; }
 
-__device__ void Ray::move() // The point moves in the specified direction with the given step
+__device__ void Ray::move(Point direction, float step) // The point moves in the specified direction with the given step
 {
     this->_prevPos = this->_currentPos;
-    float newX = this->_currentPos.getX() + (this->_direction.getX() * this->getStep());
-    float newY = this->_currentPos.getY() + (this->_direction.getY() * this->getStep());
-    float newZ = this->_currentPos.getZ() + (this->_direction.getZ() * this->getStep());
+    this->_direction = direction;
+    this->_step = step;
+    float newX = this->_currentPos.getX() + (direction.getX() * step);
+    float newY = this->_currentPos.getY() + (direction.getY() * step);
+    float newZ = this->_currentPos.getZ() + (direction.getZ() * step);
     this->_currentPos.setCoordinates(newX, newY, newZ);
 }

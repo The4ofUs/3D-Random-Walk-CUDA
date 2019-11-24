@@ -13,11 +13,11 @@ class Point
 {
 
 public:
-__device__ Point(float x, float y, float z){
+__device__ __host__ Point(float x, float y, float z){
     setCoordinates(x, y, z);
 }
 
-__device__ Point(){
+__device__ __host__ Point(){
     setCoordinates(0.f, 0.f, 0.f);
 }
 
@@ -28,7 +28,7 @@ __device__ Point(){
      * @param y
      * @param z
      */
-__device__
+__device__ __host__
     void setCoordinates(float x, float y, float z);
 
 
@@ -58,6 +58,23 @@ __device__ __host__
 __device__ __host__
     float getZ() const;
 
+    /**
+     * @brief add
+     * @return
+     * The summation of the 2 points
+     */
+__device__ __host__
+    Point add(Point point);
+
+    /**
+     * @brief subtract
+     * @return
+     * The subtraction of the 2 points
+     */
+    __device__ __host__
+    Point subtract(Point point);
+
+
 
 private:
 
@@ -79,5 +96,6 @@ private:
      */
     float _z;
 };
+
 
 #endif 

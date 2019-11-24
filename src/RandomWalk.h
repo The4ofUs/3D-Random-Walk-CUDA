@@ -4,30 +4,21 @@
 #include "Boundary.h"
 #include "RNG.h"
 
-#define BOUNDARY_RADIUS 5.0
+
 
 /**
  * @brief randomWalk
  * keeps wandering around with the photon in the 3D space
- * @return The Point where the PHoton hits the Boundary
+ * @return The Point where the Photon hits the Boundary
  */
-__device__ Point randomWalk(curandState_t *states, int idx)
+__device__ Point randomWalk(curandState_t *states, int idx, Boundary boundary, RNG rng)
 {
-    RNG rng;
-    Point origin = Point(0.f, 0.f, 0.f);
-    Ray ray = Ray(origin, origin);
-    Boundary boundary = Boundary(BOUNDARY_RADIUS, origin);
-    
+    Ray ray = Ray(Point(0.f, 0.f, 0.f), Point(0.f, 0.f, 0.f));
+
     while (!boundary.isCrossed(ray))
     {
-        ray.setDirection(rng.getRandomPoint(states, idx));
-
-        ray.setStep(rng.getRandomStep(states, idx));
-
-        ray.move();
-
+        ray.move(rng.getRandomPoint(states, idx), rng.getRandomStep(states, idx));
     }
-
     return boundary.getIntersectionPoint(ray);
 }
 

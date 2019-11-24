@@ -16,7 +16,7 @@ class Boundary {
  * @param point2
  * @return Dot Product
  */
-__device__ float dotProduct(Point point1, Point point2);
+__device__ float dot(Point point1, Point point2);
 
 /**
  * @brief swap
@@ -34,7 +34,7 @@ public:
  * r sets the radius of the spherical boundary
  * c sets the center of the spherical boundary
  */
- __device__ Boundary(float r, Point c);
+ __device__ __host__ Boundary(float r, Point c);
 
 /**
  * @brief setRadius

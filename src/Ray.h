@@ -65,8 +65,12 @@ __device__ float getStep() const;
     /**
      * @brief move
      * The point moves in the specified direction with the given step.
+     * @param direction
+     * The vector that the ray should move on
+     * @param step
+     * The magnitude of the movement
      */
-__device__ void move();
+__device__ void move(Point direction, float step);
 
 private:
     /**
