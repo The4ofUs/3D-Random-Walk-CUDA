@@ -6,9 +6,9 @@
 
 void streamOut(Point* _cpuPoints);
 
-__global__ void finalPosition(unsigned int seed, curandState_t* states, Point* _gpuPoints,Boundary boundary,RNG rng, int nBlocks) {
+__global__ void finalPosition(unsigned int seed, curandState_t* states, Point* _gpuPoints,Boundary boundary,RNG rng, int n) {
     int idx = blockIdx.x*blockDim.x+threadIdx.x;
-    if(idx < nBlocks){
+    if(idx < n){
     curand_init(seed, idx, 0, &states[idx]);
     Point finalPos;
     finalPos = randomWalk(states, idx, boundary, rng);
@@ -35,7 +35,7 @@ __global__ void finalPosition(unsigned int seed, curandState_t* states, Point* _
     RNG rng;
   
 // Call Kernel
-    finalPosition<<<nBlocks,THREADS_PER_BLOCK>>>(time(0), states , _gpuPoints, boundary, rng, nBlocks);
+    finalPosition<<<nBlocks,THREADS_PER_BLOCK>>>(time(0), states , _gpuPoints, boundary, rng, N);
 
 // Copy device data to host memory to stream them out
     cudaMemcpy(_cpuPoints, _gpuPoints, N* sizeof( Point), cudaMemcpyDeviceToHost);
